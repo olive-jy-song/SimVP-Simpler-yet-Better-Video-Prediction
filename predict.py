@@ -28,6 +28,7 @@ def main(args):
         print(batch.shape)
         batch = batch.permute(0, 1, 4, 2, 3) # (B, T, H, W, C) -> (B, T, C, H, W) 
         print(batch.shape)
+        print(batch[0, 10, :,:,:])
         out = model(batch) # (B, T, C, H, W)  
         out = out[:, -1, :, :, :] # (B, C, H, W)  
         res.append(out)  
