@@ -22,20 +22,20 @@ def main(args):
             num_workers=args.num_workers
     )
 
-    res = [] 
+    # res = [] 
     pbar = tqdm(loader, desc='Predicting', leave=False)
     for batch in pbar: 
         batch = batch.permute(0, 1, 4, 2, 3) # (B, T, H, W, C) -> (B, T, C, H, W) 
         out = model(batch) # (B, T, C, H, W)  
         out = out[:, -1, :, :, :] # (B, C, H, W)  
-        res.append(out)  
-    res = torch.cat(res, dim=0) # (N, C, H, W) 
+        # res.append(out)  
+    # res = torch.cat(res, dim=0) # (N, C, H, W) 
     
-    print(res.shape) 
+    # print(res.shape) 
 
-    torch.save(res, args.output_path) 
+    # torch.save(res, args.output_path) 
 
-    print('Saved!')
+    # print('Saved!')
 
 
 if __name__ == "__main__":
