@@ -43,6 +43,7 @@ class VideoDataset(torch.utils.data.IterableDataset):
             imgs.append(img)
         imgs = np.asarray(imgs)
         imgs = torch.tensor(imgs)
+        imgs = imgs / 255.0
 
         return imgs # [B, L, H, W, C] 
 
