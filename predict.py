@@ -5,7 +5,7 @@ from loader import VideoDataset
 from glob import glob 
 from tqdm import tqdm 
 
-def main():
+def main(args):
     model = SimVP((11, 3, 160, 240)) 
     model.load_state_dict(torch.load(args.model))
 
@@ -44,8 +44,9 @@ if __name__ == "__main__":
     parser.add_argument("--data_path", type=str, help="input data path") 
     parser.add_argument("--output_path", type=str, help="output data path") 
     parser.add_argument("--model", type=str, help="model path for simvp") 
-    parser.add_argument("--readin_batch", type=int, help="batch size for reading in/ loading data") 
-    parser.add_argument("--num_workers", type=int, help="number of workers for processing the data") 
+    parser.add_argument("--readin_batch", type=int, default=16, help="batch size for reading in/ loading data") 
+    parser.add_argument("--num_workers", type=int, default=1, help="number of workers for processing the data") 
 
     args = parser.parse_args() 
     main(args) 
+
