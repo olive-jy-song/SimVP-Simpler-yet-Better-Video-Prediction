@@ -25,7 +25,7 @@ def main(args):
     res = [] 
     pbar = tqdm(loader, desc='Predicting', leave=False)
     for batch in pbar: 
-        batch = batch.permute() # (B, T, H, W, C0 -> (B, T, C, H, W) 
+        batch = batch.permute(0, 1, 4, 2, 3) # (B, T, H, W, C) -> (B, T, C, H, W) 
         out = model(batch) # (B, T, C, H, W)  
         out = out[:, -1, :, :, :] # (B, C, H, W)  
         res.append(out)  
