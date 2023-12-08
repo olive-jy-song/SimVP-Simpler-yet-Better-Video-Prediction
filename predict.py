@@ -22,27 +22,29 @@ def main(args):
             num_workers=args.num_workers
     )
 
-    # res = [] 
+    res = [] 
     pbar = tqdm(loader, desc='Predicting', leave=False)
-    for batch in pbar: 
+    for i, batch in enumerate(pbar): 
         batch = batch.permute(0, 1, 4, 2, 3) # (B, T, H, W, C) -> (B, T, C, H, W) 
         out = model(batch) # (B, T, C, H, W)  
         out = out[:, -1, :, :, :] # (B, C, H, W)  
-        # res.append(out)  
-    # res = torch.cat(res, dim=0) # (N, C, H, W) 
+        res.append(out)  
+        if i == 3: 
+            break 
+    res = torch.cat(res, dim=0) # (N, C, H, W) 
     
     # print(res.shape) 
 
-    # torch.save(res, args.output_path) 
+    torch.save(res, args.output_path) 
 
-    # print('Saved!')
+    print('Saved!')
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     # get params 
     parser.add_argument("--data_path", type=str, help="input data path") 
-    parser.add_argument("--output_path", type=str, help="output data path") 
+    parser.add_argument("--output_path", type=str, help="output folder path") 
     parser.add_argument("--model", type=str, help="model path for simvp") 
     parser.add_argument("--readin_batch", type=int, default=16, help="batch size for reading in/ loading data") 
     parser.add_argument("--num_workers", type=int, default=1, help="number of workers for processing the data") 
