@@ -22,7 +22,7 @@ def create_parser():
     parser.add_argument('--num_workers', default=1, type=int)
 
     # model parameters
-    parser.add_argument('--in_shape', default=[11,3,160,240], type=int,nargs='*') # [10, 1, 64, 64] for mmnist, [4, 2, 32, 32] for taxibj  
+    parser.add_argument('--in_shape', default=[11,3,160,240], type=int,nargs='*') 
     parser.add_argument('--hid_S', default=64, type=int)
     parser.add_argument('--hid_T', default=256, type=int)
     parser.add_argument('--N_S', default=4, type=int)
@@ -35,8 +35,10 @@ def create_parser():
     parser.add_argument('--lr', default=0.01, type=float, help='Learning rate')
 
     # Added 
-    parser.add_argument('--load', default=None, type=str, help='path for model to load')
-    parser.add_argument('--save_path', default=None, type=str, help='path for model to save')
+    parser.add_argument('--load', default=None, type=str, help='path for model to load') 
+    parser.add_argument('--save_path', default=None, type=str, help='path for model to save') 
+    parser.add_argument('--train_path', default=None, type=str, help='path for training data') 
+    parser.add_argument('--train_img', default=False, type=bool, help='training image or training mask') 
     return parser
 
 

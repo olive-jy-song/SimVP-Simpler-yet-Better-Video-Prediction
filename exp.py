@@ -67,12 +67,12 @@ class Exp:
             self.model.load_state_dict(torch.load(args.load)) 
 
     def _get_data(self):
-        config = self.args.__dict__
         # self.train_loader, self.vali_loader, self.test_loader, self.data_mean, self.data_std = load_data()
         # self.vali_loader = self.test_loader if self.vali_loader is None else self.vali_loader
         train = VideoDataset(
-            paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/unlabeled/video_*'), 
+            paths=glob(self.args.train_path), 
             train=True, 
+            image=self.train_img, 
             video_len=11
         ) 
         print('train has ', len(train))
@@ -81,16 +81,16 @@ class Exp:
             batch_size=self.args.batch_size,
             num_workers=self.args.num_workers
         )
-        vali = VideoDataset(
-            paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/train/video_*'), 
-            train=True, 
-            video_len=11
-        ) 
-        self.vali_loader = torch.utils.data.DataLoader(
-            vali,
-            batch_size=self.args.batch_size,
-            num_workers=self.args.num_workers
-        )
+        # vali = VideoDataset(
+        #     paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/train/video_*'), 
+        #     train=True, 
+        #     video_len=11
+        # ) 
+        # self.vali_loader = torch.utils.data.DataLoader(
+        #     vali,
+        #     batch_size=self.args.batch_size,
+        #     num_workers=self.args.num_workers
+        # )
 
 
     def _select_optimizer(self):
