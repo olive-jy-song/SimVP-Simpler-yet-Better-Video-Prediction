@@ -117,7 +117,7 @@ class Exp:
         for epoch in range(config['epochs']):
             train_loss = []
             self.model.train()
-            train_pbar = tqdm(self.train_loader)
+            # train_pbar = tqdm(self.train_loader)
 
             epoch_loss = 0 
 
