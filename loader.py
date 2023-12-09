@@ -65,6 +65,6 @@ class VideoDataset(torch.utils.data.IterableDataset):
 
     def readMsk(self, video):
         # get mask
-        msk = np.load(video+"/mask.npyc") 
+        msk = np.load(video+"/mask.npy") 
         msk = torch.tensor(msk) # [L, H, W]
         return msk 
