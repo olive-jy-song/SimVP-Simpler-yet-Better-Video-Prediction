@@ -123,7 +123,7 @@ class Exp:
             epoch_loss = 0 
 
             for batch_x, batch_y in self.train_loader:
-                logging.info(msg=batch_x.shape)  
+                print('input has ', batch_x.shape)
                 self.optimizer.zero_grad()
                 batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
                 pred_y = self.model(batch_x)
