@@ -77,8 +77,8 @@ class Exp:
         ) 
         self.train_loader = torch.utils.data.DataLoader(
             train,
-            batch_size=config.batch_size,
-            num_workers=config.num_workers
+            batch_size=self.args.batch_size,
+            num_workers=self.args.num_workers
         )
         vali = VideoDataset(
             paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/train/video_*'), 
@@ -87,8 +87,8 @@ class Exp:
         ) 
         self.vali_loader = torch.utils.data.DataLoader(
             vali,
-            batch_size=config.batch_size,
-            num_workers=config.num_workers
+            batch_size=self.args.batch_size,
+            num_workers=self.args.num_workers
         )
 
 
