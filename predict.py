@@ -37,6 +37,7 @@ def main(args):
         res = torch.cat(res, dim=0) # (N, C, H, W) 
 
     if not args.pred_img:
+        print('hi')
         res = [model(batch).squeeze(1) for batch in pbar] # [(B, H, W)]
         res = torch.cat(res, dim=0) 
         print('shape is ', res.shape) 
