@@ -72,7 +72,7 @@ class Exp:
         train = VideoDataset(
             paths=glob(self.args.train_path+'video_*'), 
             train=True, 
-            image=self.train_img, 
+            image=self.args.train_img, 
             video_len=11
         ) 
         print('train has ', len(train))
