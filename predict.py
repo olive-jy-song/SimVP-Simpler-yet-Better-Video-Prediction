@@ -6,7 +6,7 @@ from glob import glob
 from tqdm import tqdm 
 
 def main(args):
-    model = SimVP((11, 3, 160, 240)) 
+    model = SimVP(args.in_shape) 
     model.load_state_dict(torch.load(args.model))
 
     model.eval() 
