@@ -61,8 +61,7 @@ class Exp:
 
     def _build_model(self):
         args = self.args
-        self.model = SimVP(tuple(args.in_shape), args.hid_S,
-                           args.hid_T, args.N_S, args.N_T).to(self.device) 
+        self.model = SimVP(tuple(args.in_shape)).to(self.device) 
         if args.load:
             self.model.load_state_dict(torch.load(args.load)) 
 
@@ -133,22 +132,22 @@ class Exp:
 
             train_loss = np.average(train_loss)
 
-            if epoch % args.log_step == 0:
-                with torch.no_grad():
-                    vali_loss = self.vali(self.vali_loader)
-                    if epoch % (args.log_step * 100) == 0:
-                        self._save(name=str(epoch))
-                print_log("Epoch: {0} | Train Loss: {1:.4f} Vali Loss: {2:.4f}\n".format(
-                    epoch + 1, train_loss, vali_loss))
-                print('recording')
-                recorder(vali_loss, self.model, self.path)
-                print('recorded') 
+            # if epoch % args.log_step == 0:
+            #     with torch.no_grad():
+            #         vali_loss = self.vali(self.vali_loader)
+            #         if epoch % (args.log_step * 100) == 0:
+            #             self._save(name=str(epoch))
+            #     print_log("Epoch: {0} | Train Loss: {1:.4f} Vali Loss: {2:.4f}\n".format(
+            #         epoch + 1, train_loss, vali_loss))
+            #     print('recording')
+            #     recorder(vali_loss, self.model, self.path)
+            #     print('recorded') 
 
-        print('done') 
-        best_model_path = self.path + '/' + 'checkpoint.pth'
-        self.model.load_state_dict(torch.load(best_model_path))
+        # print('done') 
+        # best_model_path = self.path + '/' + 'checkpoint.pth'
+        self.model.load_state_dict(torch.load(args.save_path))
         print('loaded') 
-        return self.model
+        # return self.model
 
     def vali(self, vali_loader):
         self.model.eval()
