@@ -119,6 +119,8 @@ class Exp:
             self.model.train()
             train_pbar = tqdm(self.train_loader)
 
+            epoch_loss = 0 
+
             for batch_x, batch_y in train_pbar:
                 self.optimizer.zero_grad()
                 batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
@@ -126,13 +128,15 @@ class Exp:
 
                 loss = self.criterion(pred_y, batch_y)
                 train_loss.append(loss.item())
-                train_pbar.set_description('train loss: {:.4f}'.format(loss.item()))
-
+                train_pbar.set_description('train loss: {:.4f}'.format(loss.item())) 
                 loss.backward()
                 self.optimizer.step()
-                self.scheduler.step()
+                self.scheduler.step() 
+                epoch_loss += loss.item() 
+                
 
             train_loss = np.average(train_loss)
+            print('The average train loss per epoch was ', epoch_loss/13000) 
 
             # if epoch % args.log_step == 0:
             #     with torch.no_grad():
