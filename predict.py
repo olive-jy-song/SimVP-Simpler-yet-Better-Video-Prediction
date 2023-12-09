@@ -35,7 +35,6 @@ def main(args):
             if i == 3: 
                 break 
         res = torch.cat(res, dim=0) # (N, C, H, W) 
-    print('shape is ', res.shape) 
 
     if not args.pred_img:
         res = [model(batch).squeeze(1) for batch in pbar] # [(B, H, W)]
