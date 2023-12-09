@@ -146,8 +146,8 @@ class Exp:
 
         # print('done') 
         # best_model_path = self.path + '/' + 'checkpoint.pth'
-        self.model.load_state_dict(torch.load(args.save_path))
-        print('loaded') 
+        torch.save(self.model.state_dict(), args.save_path) 
+        print('saved') 
         # return self.model
 
     def vali(self, vali_loader):
