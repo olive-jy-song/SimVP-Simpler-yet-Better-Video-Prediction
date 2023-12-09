@@ -22,6 +22,8 @@ class VideoDataset(torch.utils.data.IterableDataset):
         self.video_len = video_len
 #         self.transform = transform
         self.train = train 
+        self.mean = 0 
+        self.std = 1 
 
     def __len__(self):
         return len(self.paths)
