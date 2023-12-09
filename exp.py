@@ -75,6 +75,7 @@ class Exp:
             train=True, 
             video_len=11
         ) 
+        print('train has ', len(train))
         self.train_loader = torch.utils.data.DataLoader(
             train,
             batch_size=self.args.batch_size,
