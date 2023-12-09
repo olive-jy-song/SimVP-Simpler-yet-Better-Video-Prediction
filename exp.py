@@ -63,7 +63,7 @@ class Exp:
         args = self.args
         self.model = SimVP(tuple(args.in_shape), args.hid_S,
                            args.hid_T, args.N_S, args.N_T).to(self.device) 
-        if self.load:
+        if self.args.load:
             self.model.load_state_dict(torch.load(args.load_path)) 
 
     def _get_data(self):
