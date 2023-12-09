@@ -27,7 +27,7 @@ def create_parser():
     parser.add_argument('--hid_T', default=256, type=int)
     parser.add_argument('--N_S', default=4, type=int)
     parser.add_argument('--N_T', default=8, type=int)
-    parser.add_argument('--groups', default=4, type=int)
+    parser.add_argument('--groups', default=8, type=int)
 
     # Training parameters
     parser.add_argument('--epochs', default=51, type=int)
