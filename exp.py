@@ -121,14 +121,15 @@ class Exp:
 
             epoch_loss = 0 
 
-            for batch_x, batch_y in train_pbar:
+            for batch_x, batch_y in self.train_loader:
+                print(batch_x.shape)
                 self.optimizer.zero_grad()
                 batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
                 pred_y = self.model(batch_x)
 
                 loss = self.criterion(pred_y, batch_y)
                 train_loss.append(loss.item())
-                train_pbar.set_description('train loss: {:.4f}'.format(batch_x.shape)) 
+                # train_pbar.set_description('train loss: {:.4f}'.format(loss.item())) 
                 loss.backward()
                 self.optimizer.step()
                 self.scheduler.step() 
