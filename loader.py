@@ -17,27 +17,28 @@ simple_transforms = transforms.Compose([
 
 class VideoDataset(torch.utils.data.IterableDataset):
 
-    def __init__(self, paths, labeled=0, video_len=22, stage='train'):
+    def __init__(self, paths, train=False, video_len=22, stage='train'):
         self.paths = paths
         self.video_len = video_len
 #         self.transform = transform
-        self.labeled = labeled
+        self.train = train 
+
     def __len__(self):
         return len(self.paths)
 
     def __iter__(self):
         for video in self.paths:
-            imgs = self.readImgs(video)
-            if (not self.labeled):
-                yield imgs
+            imgs_x = self.readImgs(video, range(self.video_len))
+            if not self.train: 
+                yield imgs_x 
             else:
-                msk = self.readMsk(video)
-                yield imgs, msk
+                imgs_y = self.readImgs(video, range(self.video_len, 2*self.video_len))
+                yield imgs_x, imgs_y 
 
-    def readImgs(self, video):
+    def readImgs(self, video, load_range):
         # get video frames (22 images)
         imgs = []
-        for i in range(self.video_len):
+        for i in load_range:
             img = iio.imread(video+('/image_%d.png'%(i)))
 #             self.transforms(img)
             imgs.append(img)
@@ -47,11 +48,4 @@ class VideoDataset(torch.utils.data.IterableDataset):
 
         return imgs # [B, L, H, W, C] 
 
-
-    def readMsk(self, video):
-        # get mask
-        msk = np.load(video+"/mask.npyc")
-        msk = torch.tensor(msk) 
-        return msk # [B, L, H, W] 
-    
     

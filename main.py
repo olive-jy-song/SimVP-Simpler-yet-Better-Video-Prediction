@@ -19,7 +19,7 @@ def create_parser():
     parser.add_argument('--val_batch_size', default=16, type=int, help='Batch size')
     parser.add_argument('--data_root', default='./data/')
     parser.add_argument('--dataname', default='mmnist', choices=['mmnist', 'taxibj'])
-    parser.add_argument('--num_workers', default=8, type=int)
+    parser.add_argument('--num_workers', default=1, type=int)
 
     # model parameters
     parser.add_argument('--in_shape', default=[10, 1, 64, 64], type=int,nargs='*') # [10, 1, 64, 64] for mmnist, [4, 2, 32, 32] for taxibj  
@@ -33,6 +33,9 @@ def create_parser():
     parser.add_argument('--epochs', default=51, type=int)
     parser.add_argument('--log_step', default=1, type=int)
     parser.add_argument('--lr', default=0.01, type=float, help='Learning rate')
+
+    # Added 
+    parser.add_argument('--load', default=None, type=str, help='path for model to load')
     return parser
 
 

@@ -10,7 +10,7 @@ from model import SimVP
 from tqdm import tqdm
 from API import *
 from utils import *
-
+from loader import * 
 
 class Exp:
     def __init__(self, args):
@@ -62,12 +62,35 @@ class Exp:
     def _build_model(self):
         args = self.args
         self.model = SimVP(tuple(args.in_shape), args.hid_S,
-                           args.hid_T, args.N_S, args.N_T).to(self.device)
+                           args.hid_T, args.N_S, args.N_T).to(self.device) 
+        if self.load:
+            self.model.load_state_dict(torch.load(args.load_path)) 
 
     def _get_data(self):
         config = self.args.__dict__
-        self.train_loader, self.vali_loader, self.test_loader, self.data_mean, self.data_std = load_data(**config)
-        self.vali_loader = self.test_loader if self.vali_loader is None else self.vali_loader
+        # self.train_loader, self.vali_loader, self.test_loader, self.data_mean, self.data_std = load_data()
+        # self.vali_loader = self.test_loader if self.vali_loader is None else self.vali_loader
+        train = VideoDataset(
+            paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/val/video_*'), 
+            train=True, 
+            video_len=11
+        ) 
+        self.train_loader = torch.utils.data.DataLoader(
+            train,
+            batch_size=config.batch_size,
+            num_workers=config.num_workers
+        )
+        vali = VideoDataset(
+            paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/train/video_*'), 
+            train=True, 
+            video_len=11
+        ) 
+        self.vali_loader = torch.utils.data.DataLoader(
+            vali,
+            batch_size=config.batch_size,
+            num_workers=config.num_workers
+        )
+
 
     def _select_optimizer(self):
         self.optimizer = torch.optim.Adam(
