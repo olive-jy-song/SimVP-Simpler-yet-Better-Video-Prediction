@@ -122,6 +122,7 @@ class Exp:
             epoch_loss = 0 
 
             for batch_x, batch_y in train_pbar:
+                print(batch_x.shape)
                 self.optimizer.zero_grad()
                 batch_x, batch_y = batch_x.to(self.device), batch_y.to(self.device)
                 pred_y = self.model(batch_x)
