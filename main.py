@@ -45,7 +45,7 @@ def create_parser():
 if __name__ == '__main__':
     args = create_parser().parse_args()
     config = args.__dict__
-
+    print(args.train_img)
     exp = Exp(args)
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>  start <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
     exp.train(args)
