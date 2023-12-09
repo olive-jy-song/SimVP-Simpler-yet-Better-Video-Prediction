@@ -142,8 +142,10 @@ class Exp:
                     epoch + 1, train_loss, vali_loss))
                 recorder(vali_loss, self.model, self.path)
 
+        print('done') 
         best_model_path = self.path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
+        print('loaded') 
         return self.model
 
     def vali(self, vali_loader):
