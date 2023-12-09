@@ -61,7 +61,8 @@ class Exp:
 
     def _build_model(self):
         args = self.args
-        self.model = SimVP(tuple(args.in_shape)).to(self.device) 
+        self.model = SimVP(tuple(args.in_shape), args.hid_S,
+                           args.hid_T, args.N_S, args.N_T).to(self.device) 
         if args.load:
             self.model.load_state_dict(torch.load(args.load)) 
 
