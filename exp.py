@@ -71,7 +71,7 @@ class Exp:
         # self.train_loader, self.vali_loader, self.test_loader, self.data_mean, self.data_std = load_data()
         # self.vali_loader = self.test_loader if self.vali_loader is None else self.vali_loader
         train = VideoDataset(
-            paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/val/video_*'), 
+            paths=glob('/scratch/js10417/future-segmentation/dl_data/dataset/unlabeled/video_*'), 
             train=True, 
             video_len=11
         ) 
