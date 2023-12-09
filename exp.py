@@ -70,7 +70,7 @@ class Exp:
         # self.train_loader, self.vali_loader, self.test_loader, self.data_mean, self.data_std = load_data()
         # self.vali_loader = self.test_loader if self.vali_loader is None else self.vali_loader
         train = VideoDataset(
-            paths=glob(self.args.train_path), 
+            paths=glob(self.args.train_path+'video_*'), 
             train=True, 
             image=self.train_img, 
             video_len=11
