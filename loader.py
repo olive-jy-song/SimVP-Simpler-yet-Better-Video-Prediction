@@ -42,7 +42,6 @@ class VideoDataset(torch.utils.data.IterableDataset):
         else: 
             for video in self.paths:
                 msk = self.readMsk(video)
-                print(msk.shape)
                 msk_x, msk_y = msk[:self.video_len], msk[self.video_len:]
                 if not self.train: 
                     yield msk_x 
@@ -69,4 +68,5 @@ class VideoDataset(torch.utils.data.IterableDataset):
         msk = np.load(video+"/mask.npy") 
         msk = torch.tensor(msk) # [L, H, W]
         msk = msk[:, None, :, :]
+        msk = msk / 48.0 
         return msk 
