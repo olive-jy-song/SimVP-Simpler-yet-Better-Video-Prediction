@@ -140,7 +140,9 @@ class Exp:
                         self._save(name=str(epoch))
                 print_log("Epoch: {0} | Train Loss: {1:.4f} Vali Loss: {2:.4f}\n".format(
                     epoch + 1, train_loss, vali_loss))
+                print('recording')
                 recorder(vali_loss, self.model, self.path)
+                print('recorded') 
 
         print('done') 
         best_model_path = self.path + '/' + 'checkpoint.pth'
