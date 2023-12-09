@@ -41,6 +41,7 @@ class VideoDataset(torch.utils.data.IterableDataset):
         else: 
             for video in self.paths:
                 msk = self.readMsk(video)
+                print(msk.shape)
                 msk_x, msk_y = msk[:self.video_len], msk[self.video_len:]
                 if not self.train: 
                     yield msk_x 
