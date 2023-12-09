@@ -13,7 +13,8 @@ def main(args):
 
     data = VideoDataset(
         paths=glob(f'{args.data_path}/video_*'), 
-        labeled=False, 
+        train=False, 
+        image=args.pred_img, 
         video_len=11
     ) 
     loader = torch.utils.data.DataLoader(
@@ -29,11 +30,14 @@ def main(args):
         out = model(batch) # (B, T, C, H, W)  
         out = out[:, -1, :, :, :] # (B, C, H, W)  
         res.append(out)  
-        if i == 3: 
+        if args.pred_img and i == 3: 
             break 
     res = torch.cat(res, dim=0) # (N, C, H, W) 
-    
-    # print(res.shape) 
+    print('shape is ', res.shape) 
+
+    if not args.pred_img:
+        res = res.squeeze(1) 
+        print('shape is ', res.shape) 
 
     torch.save(res, args.output_path) 
 
@@ -48,6 +52,9 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str, help="model path for simvp") 
     parser.add_argument("--readin_batch", type=int, default=16, help="batch size for reading in/ loading data") 
     parser.add_argument("--num_workers", type=int, default=1, help="number of workers for processing the data") 
+    parser.add_argument('--pred_img', action='store_true', help='training image or training mask')
+    parser.add_argument('--in_shape', default=[11,3,160,240], type=int,nargs='*') 
+
 
     args = parser.parse_args() 
     main(args) 
