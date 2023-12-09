@@ -38,8 +38,10 @@ def create_parser():
     parser.add_argument('--load', default=None, type=str, help='path for model to load') 
     parser.add_argument('--save_path', default=None, type=str, help='path for model to save') 
     parser.add_argument('--train_path', default=None, type=str, help='path for training data') 
-    parser.add_argument('--train_img', type=bool, help='training image or training mask') 
+    parser.add_argument('--train_img', action='store_true', help='training image or training mask')
+    
     return parser
+
 
 
 if __name__ == '__main__':
