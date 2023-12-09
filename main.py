@@ -36,6 +36,7 @@ def create_parser():
 
     # Added 
     parser.add_argument('--load', default=None, type=str, help='path for model to load')
+    parser.add_argument('--save_path', default=None, type=str, help='path for model to save')
     return parser
 
 
