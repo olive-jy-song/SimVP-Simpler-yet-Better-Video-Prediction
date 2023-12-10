@@ -68,5 +68,5 @@ class VideoDataset(torch.utils.data.IterableDataset):
         msk = np.load(video+"/mask.npy") 
         msk = torch.tensor(msk) # [L, H, W]
         msk = msk[:, None, :, :] # [L, 1, H, W]
-        msk = msk / 48.0 
+        msk = msk / 255.0 
         return msk 
