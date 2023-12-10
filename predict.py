@@ -25,22 +25,27 @@ def main(args):
 
     res = [] 
     pbar = tqdm(loader, desc='Predicting', leave=False)
-    if args.pred_img: 
-        for i, batch in enumerate(pbar): 
-            if args.pred_img: 
-                batch = batch.permute(0, 1, 4, 2, 3) # (B, T, H, W, C) -> (B, T, C, H, W) 
-            out = model(batch) # (B, T, C, H, W)  
-            out = out[:, -1, :, :, :] # (B, C, H, W)  
-            res.append(out)  
-            if i == 3: 
-                break 
-        res = torch.cat(res, dim=0) # (N, C, H, W) 
+
+    for i, batch in enumerate(pbar): 
+        if args.pred_img: 
+            batch = batch.permute(0, 1, 4, 2, 3) # (B, T, H, W, C) -> (B, T, C, H, W) 
+        out = model(batch) # (B, T, C, H, W)  
+        out = out[:, -1, :, :, :] # (B, C, H, W)  
+        res.append(out)  
+        if i == 3: 
+            break 
+    
+    res = torch.cat(res, dim=0) # (N, C, H, W) 
 
     if not args.pred_img:
-        print('hi')
-        res = [model(batch).squeeze(1) for batch in pbar] # [(B, H, W)]
-        res = torch.cat(res, dim=0) 
+        res = res.squeeze(1) 
         print('shape is ', res.shape) 
+        
+    # if not args.pred_img:
+    #     print('hi')
+    #     res = [model(batch).squeeze(1) for batch in pbar] # [(B, H, W)]
+    #     res = torch.cat(res, dim=0) 
+    #     print('shape is ', res.shape) 
 
     torch.save(res, args.output_path) 
 
